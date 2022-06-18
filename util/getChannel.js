@@ -16,11 +16,21 @@ module.exports = async (client, interaction) => {
       });
       return resolve(false);
     }
+
     if (
       interaction.guild.me.voice.channel &&
       interaction.member.voice.channel.id !==
         interaction.guild.me.voice.channel.id
     ) {
+
+      let player;
+      if (client.manager)
+        player = client.manager.players.get(interaction.guild.id);
+  
+      if(player && !player.playing && interaction.member.voice.channel.joinable){
+        resolve(interaction.member.voice.channel);
+      }
+
       await interaction.reply({
         embeds: [
           client.ErrorEmbed(
