@@ -53,7 +53,7 @@ module.exports = async (client, interaction) => {
     setTimeout(() => {
       interaction.deleteReply();
     }, 5000);
-    player.setNowplayingMessage(null)
+    player.setNowplayingMessage(client, null)
     return;
   }
 

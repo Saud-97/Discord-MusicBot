@@ -33,7 +33,7 @@ const command = new SlashCommand()
 
     player.stop();
     player.queue.clear();
-    player.setNowplayingMessage(null)
+    player.setNowplayingMessage(client, null)
     return interaction.reply({
       embeds: [
         new MessageEmbed()
