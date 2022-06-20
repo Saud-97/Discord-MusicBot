@@ -88,6 +88,9 @@ module.exports = async (client, interaction) => {
             .setDescription("There is no song playing right now."),
         ],
       });
+      setTimeout(() => {
+        interaction.deleteReply();
+      }, 5000);
 
     } else {
 
@@ -98,9 +101,7 @@ module.exports = async (client, interaction) => {
         components: [client.createController(player.options.guild, player)],
       });
     }
-    setTimeout(() => {
-      interaction.deleteReply();
-    }, 5000);
+
     return;
   }
 
@@ -110,8 +111,21 @@ module.exports = async (client, interaction) => {
   }
 
   if (property === "Loop") {
-    player.setTrackRepeat(!player.trackRepeat);
+    if (player.trackRepeat) {
+      player.setTrackRepeat(false);
+      player.setQueueRepeat(true);
 
+    } else if (player.queueRepeat) {
+      player.setQueueRepeat(false);
+
+    } else {
+      player.setTrackRepeat(true);
+
+    }
+
+    interaction.update({
+      components: [client.createController(player.options.guild, player)],
+    });
     return;
   }
 
