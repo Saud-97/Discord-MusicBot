@@ -44,7 +44,7 @@ module.exports = async (client, interaction) => {
   if (property === "Stop") {
     player.queue.clear();
     player.stop();
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         client.Embed(
           "⏹️ | **Successfully stopped the player**"
