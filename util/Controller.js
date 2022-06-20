@@ -40,6 +40,7 @@ module.exports = async (client, interaction) => {
       );
     return interaction.reply({ embeds: [sameEmbed], ephemeral: true });
   }
+
   if (property === "Stop") {
     player.stop();
     player.queue.clear();
@@ -96,6 +97,10 @@ module.exports = async (client, interaction) => {
               : ":white_check_mark: | **Resumed**"
           ),
         ],
+      });
+      
+      interaction.update({
+        components: [client.createController(player.options.guild, player)],
       });
     }
     setTimeout(() => {
