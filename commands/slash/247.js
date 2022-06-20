@@ -26,7 +26,7 @@ const command = new SlashCommand()
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-            .setDescription("There's nothing to play 24/7."),
+            .setDescription("The bot must be joined to a channel to play 24/7."),
         ],
         ephemeral: true,
       });
@@ -58,7 +58,6 @@ const command = new SlashCommand()
       }`
     );
 
-    if (!player.playing && player.queue.totalSize === 0 && twentyFourSeven) player.destroy();
 
     return interaction.reply({ embeds: [twentyFourSevenEmbed] });
   });

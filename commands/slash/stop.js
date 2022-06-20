@@ -31,9 +31,8 @@ const command = new SlashCommand()
       });
     }
 
-    player.stop();
     player.queue.clear();
-    player.setNowplayingMessage(client, null)
+    player.stop();
     return interaction.reply({
       embeds: [
         new MessageEmbed()

@@ -24,7 +24,7 @@ module.exports = async (client, interaction) => {
     const joinEmbed = new MessageEmbed()
       .setColor(client.config.embedColor)
       .setDescription(
-        "❌ | **You must be in a voice channel to use this command!**"
+        "❌ | **You must be in a voice channel to use this action!**"
       );
     return interaction.reply({ embeds: [joinEmbed], ephemeral: true });
   }
@@ -36,14 +36,14 @@ module.exports = async (client, interaction) => {
     const sameEmbed = new MessageEmbed()
       .setColor(client.config.embedColor)
       .setDescription(
-        "❌ | **You must be in the same voice channel as me to use this command!**"
+        "❌ | **You must be in the same voice channel as me to use this action!**"
       );
     return interaction.reply({ embeds: [sameEmbed], ephemeral: true });
   }
 
   if (property === "Stop") {
-    player.stop();
     player.queue.clear();
+    player.stop();
     interaction.reply({
       embeds: [
         client.Embed(
@@ -54,7 +54,11 @@ module.exports = async (client, interaction) => {
     setTimeout(() => {
       interaction.deleteReply();
     }, 5000);
-    player.setNowplayingMessage(client, null)
+      
+    interaction.update({
+      components: [client.createController(player.options.guild, player)],
+    });
+
     return;
   }
 
@@ -76,7 +80,7 @@ module.exports = async (client, interaction) => {
   }
 
   if (property === "PlayAndPause") {
-    if (!player || !player.queue || !player.queue.length) {
+    if (!player || (!player.playing && player.queue.totalSize === 0)) {
       interaction.reply({
         embeds: [
           new MessageEmbed()
@@ -89,16 +93,7 @@ module.exports = async (client, interaction) => {
 
       if (player.paused) player.pause(false);
       else player.pause(true);
-      interaction.reply({
-        embeds: [
-          client.Embed(
-            player.paused
-              ? ":white_check_mark: | **Paused**"
-              : ":white_check_mark: | **Resumed**"
-          ),
-        ],
-      });
-      
+
       interaction.update({
         components: [client.createController(player.options.guild, player)],
       });
@@ -115,16 +110,8 @@ module.exports = async (client, interaction) => {
   }
 
   if (property === "Loop") {
-    if (player.setTrackRepeat(!player.trackRepeat));
-    const trackRepeat = player.trackRepeat ? "enabled" : "disabled";
-    interaction.reply({
-      embeds: [
-        client.Embed(`🔂 | **Loop has been \`${trackRepeat}\`**`),
-      ],
-    });
-    setTimeout(() => {
-      interaction.deleteReply();
-    }, 5000);
+    player.setTrackRepeat(!player.trackRepeat);
+
     return;
   }
 
