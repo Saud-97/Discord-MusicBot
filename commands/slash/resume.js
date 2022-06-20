@@ -20,7 +20,7 @@ const command = new SlashCommand()
         ],
       });
 
-    if (!player) {
+    if (!player || !player.queue || !player.queue.length) {
       return interaction.reply({
         embeds: [
           new MessageEmbed()

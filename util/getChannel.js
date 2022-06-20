@@ -12,7 +12,7 @@ module.exports = async (client, interaction) => {
           client.ErrorEmbed(
             "You must be in a voice channel to use this command!"
           ),
-        ],
+        ], ephemeral: true,
       });
       return resolve(false);
     }
@@ -36,7 +36,7 @@ module.exports = async (client, interaction) => {
           client.ErrorEmbed(
             "You must be in the same voice channel as me to use this command!"
           ),
-        ],
+        ], ephemeral: true,
       });
       return resolve(false);
     }

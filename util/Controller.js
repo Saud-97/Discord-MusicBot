@@ -75,17 +75,29 @@ module.exports = async (client, interaction) => {
   }
 
   if (property === "PlayAndPause") {
-    if (player.paused) player.pause(false);
-    else player.pause(true);
-    interaction.reply({
-      embeds: [
-        client.Embed(
-          player.paused
-            ? ":white_check_mark: | **Paused**"
-            : ":white_check_mark: | **Resumed**"
-        ),
-      ],
-    });
+    if (!player || !player.queue || !player.queue.length) {
+      interaction.reply({
+        embeds: [
+          new MessageEmbed()
+            .setColor("RED")
+            .setDescription("There is no song playing right now."),
+        ],
+      });
+
+    } else {
+
+      if (player.paused) player.pause(false);
+      else player.pause(true);
+      interaction.reply({
+        embeds: [
+          client.Embed(
+            player.paused
+              ? ":white_check_mark: | **Paused**"
+              : ":white_check_mark: | **Resumed**"
+          ),
+        ],
+      });
+    }
     setTimeout(() => {
       interaction.deleteReply();
     }, 5000);
@@ -100,14 +112,14 @@ module.exports = async (client, interaction) => {
   if (property === "Loop") {
     if (player.setTrackRepeat(!player.trackRepeat));
     const trackRepeat = player.trackRepeat ? "enabled" : "disabled";
-      interaction.reply({
-        embeds: [
-          client.Embed(`🔂 | **Loop has been \`${trackRepeat}\`**`),
-        ],
-      });
-      setTimeout(() => {
-        interaction.deleteReply();
-      }, 5000);
+    interaction.reply({
+      embeds: [
+        client.Embed(`🔂 | **Loop has been \`${trackRepeat}\`**`),
+      ],
+    });
+    setTimeout(() => {
+      interaction.deleteReply();
+    }, 5000);
     return;
   }
 
