@@ -7,13 +7,17 @@
 module.exports = async (client, interaction) => {
   return new Promise(async (resolve) => {
     if (!interaction.member.voice.channel) {
-      await interaction.reply({
+      const msg = await interaction.reply({
         embeds: [
           client.ErrorEmbed(
             "You must be in a voice channel to use this command!"
           ),
-        ], ephemeral: true,
+        ],
       });
+      setTimeout(() => {
+        interaction.message?  interaction.deleteReply() : msg.delete();
+      }, 5000);
+
       return resolve(false);
     }
 
@@ -27,17 +31,21 @@ module.exports = async (client, interaction) => {
       if (client.manager)
         player = client.manager.players.get(interaction.guild.id);
   
-      if(player && !player.queue.current && interaction.member.voice.channel.joinable){
+      if(player && (!player.queue.current || !player.playing || player.paused) && interaction.member.voice.channel.joinable){
         return resolve(interaction.member.voice.channel);
       }
 
-      await interaction.reply({
+      const msg = await interaction.reply({
         embeds: [
           client.ErrorEmbed(
             "You must be in the same voice channel as me to use this command!"
           ),
-        ], ephemeral: true,
+        ],
       });
+      setTimeout(() => {
+        interaction.message?  interaction.deleteReply() : msg.delete();
+      }, 5000);
+
       return resolve(false);
     }
     if (!interaction.member.voice.channel.joinable) {
