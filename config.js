@@ -15,9 +15,8 @@ module.exports = {
   disconnectTime: 30000, //How long should the bot wait before disconnecting from the voice channel. in miliseconds. set to 1 for instant disconnect.
   alwaysplay: false, // when set to true music will always play no matter if theres no one in voice channel.
   debug: true, //Debug mode
-  debug: false, //Debug mode
   cookieSecret: "CodingWithSudhan is epic",//Cookie Secret
-  website: "http://localhost:" + port,//without the / at the end
+  website: "http://localhost:" + this.port,//without the / at the end
   // Lavalink server; optional public lavalink -> https://lavalink-list.darrennathanael.com/
   // The default one should work fine.
   nodes: [
@@ -27,7 +26,7 @@ module.exports = {
       port: 2000,
       password: "lavalink",
       retryAmount: 999999999999999, //- The amount of times to retry connecting to the node if connection got dropped.
-      retryDelay: 0, //- Delay between reconnect attempts if connection is lost.
+      retryDelay: 10, //- Delay between reconnect attempts if connection is lost.
       secure: false, //- Can be either true or false. Only use true if ssl is enabled!
     },
   ],
