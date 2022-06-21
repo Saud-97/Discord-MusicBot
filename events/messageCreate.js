@@ -18,10 +18,8 @@ module.exports = async (client, message) => {
   let spCharsRegExp = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
   if (!message.author.bot && client.config.musicChannelIDs.includes(message.channel.id) && !spCharsRegExp.test(message.content)) {
 
-    message.delete()
-
-
     let channel = await client.getChannel(client, message);
+    message.delete()
     if (!channel) return;
 
     let player;

@@ -10,7 +10,7 @@ module.exports = async (client, interaction) => {
   let player = client.manager.get(guild.id);
 
   if (!player) {
-    interaction.reply({
+    await interaction.reply({
       embeds: [
         client.Embed("❌ | **There is no player to control in this server.**"),
       ],
@@ -65,7 +65,7 @@ module.exports = async (client, interaction) => {
   // if theres no previous song, return an error.
   if (property === "Replay") {
     if (!player.queue.previous) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [client.Embed("❌ | **There is no previous song to replay.**")],
       });
       setTimeout(() => {
@@ -81,7 +81,7 @@ module.exports = async (client, interaction) => {
 
   if (property === "PlayAndPause") {
     if (!player || (!player.playing && player.queue.totalSize === 0)) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new MessageEmbed()
             .setColor("RED")

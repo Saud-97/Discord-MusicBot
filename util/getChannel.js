@@ -15,7 +15,7 @@ module.exports = async (client, interaction) => {
         ],
       });
       setTimeout(() => {
-        interaction.message?  interaction.deleteReply() : msg.delete();
+        interaction.version?  interaction.deleteReply() : msg.delete();
       }, 5000);
 
       return resolve(false);
@@ -43,7 +43,7 @@ module.exports = async (client, interaction) => {
         ],
       });
       setTimeout(() => {
-        interaction.message?  interaction.deleteReply() : msg.delete();
+        interaction.version?  interaction.deleteReply() : msg.delete();
       }, 5000);
 
       return resolve(false);
