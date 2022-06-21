@@ -27,8 +27,8 @@ module.exports = async (client, interaction) => {
       if (client.manager)
         player = client.manager.players.get(interaction.guild.id);
   
-      if(player && !player.playing && interaction.member.voice.channel.joinable){
-        resolve(interaction.member.voice.channel);
+      if(player && !player.queue.current && interaction.member.voice.channel.joinable){
+        return resolve(interaction.member.voice.channel);
       }
 
       await interaction.reply({

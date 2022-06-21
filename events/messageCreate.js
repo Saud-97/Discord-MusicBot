@@ -40,6 +40,11 @@ module.exports = async (client, message) => {
       player.connect();
     }
 
+    if (channel.id !== player.voiceChannel) {
+      player.setVoiceChannel(channel.id);
+      player.connect();
+    }
+
     await message.channel.send({
       embeds: [
         new MessageEmbed()
