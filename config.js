@@ -1,7 +1,7 @@
 module.exports = {
   cmdPerPage: 10, //Number of commands per page of help command
-  adminId: "UserId", // Admin of the bot
-  musicChannelIDs: ["987259543446777916" /*22 community*/, "985988530125815859"/*Saud Server*/, "988483319157100554" /*Finland*/] , // music channels to listen for song names and auto play
+  adminId: "339261785053855744", // Admin of the bot
+  musicChannelIDs: ["987259543446777916" /*22 community*/, "985988530125815859" /*Saud Server*/, "988483319157100554" /*Finland*/] , // music channels to listen for song names and auto play
   token: process.env.Token || "", //Bot's Token
   clientId: process.env.Discord_ClientID  || "", //ID of the bot
   clientSecret: process.env.Discord_ClientSecret  || "", //Client Secret of the bot

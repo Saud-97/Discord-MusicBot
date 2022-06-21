@@ -38,13 +38,14 @@ module.exports = async (client, interaction) => {
       .setDescription(
         "❌ | **You must be in the same voice channel as me to use this action!**"
       );
-    return interaction.reply({ embeds: [sameEmbed], ephemeral: true });
+    return await interaction.reply({ embeds: [sameEmbed], ephemeral: true });
   }
 
   if (property === "Stop") {
     player.queue.clear();
     player.stop();
-    await interaction.reply({
+    client.warn(`Player: ${player.options.guild} | Successfully stopped the player`);
+    const msg = await interaction.channel.send({
       embeds: [
         client.Embed(
           "⏹️ | **Successfully stopped the player**"
@@ -52,7 +53,7 @@ module.exports = async (client, interaction) => {
       ],
     });
     setTimeout(() => {
-      interaction.deleteReply();
+      msg.delete();
     }, 5000);
       
     interaction.update({
@@ -65,11 +66,11 @@ module.exports = async (client, interaction) => {
   // if theres no previous song, return an error.
   if (property === "Replay") {
     if (!player.queue.previous) {
-      await interaction.reply({
+      const msg = await interaction.channel.send({
         embeds: [client.Embed("❌ | **There is no previous song to replay.**")],
       });
       setTimeout(() => {
-        interaction.deleteReply();
+        msg.delete();
       }, 5000);
       return;
     }
@@ -81,7 +82,7 @@ module.exports = async (client, interaction) => {
 
   if (property === "PlayAndPause") {
     if (!player || (!player.playing && player.queue.totalSize === 0)) {
-      await interaction.reply({
+      const msg = await interaction.channel.send({
         embeds: [
           new MessageEmbed()
             .setColor("RED")
@@ -89,13 +90,14 @@ module.exports = async (client, interaction) => {
         ],
       });
       setTimeout(() => {
-        interaction.deleteReply();
+        msg.delete();
       }, 5000);
 
     } else {
 
       if (player.paused) player.pause(false);
       else player.pause(true);
+      client.warn(`Player: ${player.options.guild} | Successfully ${player.paused? "paused":"resumed"} the player`);
 
       interaction.update({
         components: [client.createController(player.options.guild, player)],
@@ -114,14 +116,12 @@ module.exports = async (client, interaction) => {
     if (player.trackRepeat) {
       player.setTrackRepeat(false);
       player.setQueueRepeat(true);
-
     } else if (player.queueRepeat) {
       player.setQueueRepeat(false);
-
     } else {
       player.setTrackRepeat(true);
-
     }
+    client.warn(`Player: ${player.options.guild} | Successfully toggled loop the player`);
 
     interaction.update({
       components: [client.createController(player.options.guild, player)],
