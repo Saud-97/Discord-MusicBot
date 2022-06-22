@@ -33,6 +33,8 @@ const command = new SlashCommand()
 
     player.queue.clear();
     player.stop();
+    player.set("autoQueue", false);
+
     return interaction.reply({
       embeds: [
         new MessageEmbed()
