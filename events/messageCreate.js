@@ -16,7 +16,7 @@ module.exports = async (client, message) => {
   }
 
   let spCharsRegExp = /^[!@#$%^&*()_+\-=\[\]{};'`:"\\|,.<>\/?]+/;
-  if (!message.author.bot && client.config.guilds.filter(guild => guild.textChannel == message.channel.id).length && !spCharsRegExp.test(message.content)) {
+  if (!message.author.bot && client.config.guilds.some(guild => guild.textChannel == message.channel.id) && !spCharsRegExp.test(message.content)) {
 
     let channel = await client.getChannel(client, message);
     message.delete()
