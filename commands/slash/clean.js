@@ -8,13 +8,14 @@ const command = new SlashCommand()
         option
             .setName("number")
             .setDescription("Number of messages to delete.")
+            .setMinValue(2).setMaxValue(100)
             .setRequired(false)
     )
     .setRun(async (client, interaction, options) => {
 
         await interaction.deferReply();
         let number = interaction.options.getInteger("number");
-        number = number? ++number : 100;
+        number = number && number < 100? ++number : 100;
 
         let isMusicChannel = client.config.guilds.some(guild => guild.textChannel == interaction.channel.id);
         let player;
