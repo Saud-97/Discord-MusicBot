@@ -43,15 +43,13 @@ module.exports = async (client, message) => {
       player.connect();
     }
 
-    await message.channel.send({
+   let msg =  await message.channel.send({
       embeds: [
         new MessageEmbed()
           .setColor(client.config.embedColor)
           .setDescription(":mag_right: **Searching...**"),
       ],
-    }).then(msg => {
-      msg.delete({ timeout: 5000 /*time unitl delete in milliseconds*/});
-  });
+    });
 
     let query = message.content;
     let res = await player.search(query, message.member).catch((err) => {
@@ -103,8 +101,7 @@ module.exports = async (client, message) => {
         player.queue.previous = player.queue.current;
       }
 
-      return message.channel
-        .send({ embeds: [addQueueEmbed] })
+      return msg.edit({ embeds: [addQueueEmbed] })
         .catch(this.warn);
     }
 
