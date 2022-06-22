@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js");
 /**
  *
  * @param {import("../lib/DiscordMusicBot")} client
@@ -19,22 +20,40 @@ module.exports = (client) => {
 
   setTimeout(autoJoinDefaultGuilds , 5000);
 
-  function autoJoinDefaultGuilds() {
-      client.config.guilds.forEach(guild => {
-              try {
-                  let player = client.createPlayer(0, 0, guild).connect(true)
-                  client.channels.cache
-                  .get(player.textChannel)
-                  .send({
-                      embeds: [
-                          client.Embed(":white_check_mark: | **The bot have been restarted.**"),
-                      ],
-                  });
-              } catch (e) {
-                  client.error(`Failed to auto join ${guild.name} server. Verify guilds configs.`)
-              }
+  async function autoJoinDefaultGuilds() {
+      for (const guild of client.config.guilds) {
+          try {
+              const channel = await client.channels.cache.get(guild.textChannel);
+              await clearChannel(channel);
+              channel.send({
+                  embeds: [
+                      client.Embed(":white_check_mark: | **The bot have been restarted.**"),
+                  ],
+              });
+              client.createPlayer(0, 0, guild).connect(true).setMusicMessage(client);
+
+          } catch (e) {
+              client.error(`Failed to auto join ${ guild.name } server. Verify guild configs.`);
           }
-      );
+      }
   }
+
+    async function clearChannel(channel, n = 0, old = false) {
+        let collected = await channel.messages.fetch();
+        if (collected.size > 0) {
+            if (old) {
+                for (let msg of collected.array()) {
+                    await msg.delete();
+                    n++;
+                }
+            } else {
+                let deleted = await channel.bulkDelete(100, true);
+                if (deleted.size < collected.size) old = true;
+                n += deleted;
+            }
+
+            return n + await clearChannel(channel, old);
+        } else return 0;
+    }
 
 };
