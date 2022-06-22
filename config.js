@@ -1,7 +1,26 @@
 module.exports = {
   cmdPerPage: 10, //Number of commands per page of help command
   adminId: "339261785053855744", // Admin of the bot
-  musicChannelIDs: ["987259543446777916" /*22 community*/, "985988530125815859" /*Saud Server*/, "988483319157100554" /*Finland*/] , // music channels to listen for song names and auto play
+  guilds: [
+    {
+      name: "22 Community",
+      id: "684644748073369629",
+      voiceChannel: "684650826773430295", // voice channel ID to auto join on bot restart
+      textChannel: "987259543446777916", // text channel ID to listen for song names and autoplay them
+    },
+    {
+      name: "Finland",
+      id: "957328899279294484",
+      voiceChannel: "988483302866423858", // voice channel ID to auto join on bot restart
+      textChannel: "988483319157100554", // text channel ID to listen for song names and autoplay them
+    },
+    {
+      name: "Saud's Server",
+      id: "689135944078852154",
+      voiceChannel: "878731071481602049", // voice channel ID to auto join on bot restart
+      textChannel: "985988530125815859", // text channel ID to listen for song names and autoplay them
+    },
+  ],
   token: process.env.Token || "", //Bot's Token
   clientId: process.env.Discord_ClientID  || "", //ID of the bot
   clientSecret: process.env.Discord_ClientSecret  || "", //Client Secret of the bot
