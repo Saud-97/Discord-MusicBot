@@ -30,14 +30,14 @@ module.exports = async (client, interaction) => {
   }
 
   if (
-    interaction.guild.me.voice.channel &&
-    !interaction.guild.me.voice.channel.equals(interaction.member.voice.channel)
+      interaction.guild.me.voice.channel &&
+      !interaction.guild.me.voice.channel.equals(interaction.member.voice.channel)
   ) {
     const sameEmbed = new MessageEmbed()
-      .setColor(client.config.embedColor)
-      .setDescription(
-        "❌ | **You must be in the same voice channel as me to use this action!**"
-      );
+        .setColor(client.config.embedColor)
+        .setDescription(
+            "❌ | **You must be in the same voice channel as me to use this action!**"
+        );
     return await interaction.reply({ embeds: [sameEmbed], ephemeral: true });
   }
 
