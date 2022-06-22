@@ -1,4 +1,5 @@
 const SlashCommand = require("../../lib/SlashCommand");
+const { MessageEmbed } = require("discord.js");
 
 const command = new SlashCommand()
     .setName("clean")
@@ -38,6 +39,23 @@ const command = new SlashCommand()
                     setTimeout(() => {
                         interaction.deleteReply();
                     }, 5000);
+
+                    if(client.config.guilds.some(guild => guild.textChannel == interaction.channel.id)){
+                        let player = client.manager.get(guild.id);
+                            if(player){
+                                let sendMusicMessage =  await client.channels.cache
+                                    .get(player.textChannel)
+                                    .send({
+                                        embeds: [
+                                            new MessageEmbed()
+                                                .setDescription("🎶 | Send a song name/link below this message to play music!"),
+                                        ],
+                                    });
+                                player.setSendMusicMessage(client, sendMusicMessage);
+                                if(player.track)
+                                    player.sendNowplayingMessage(client);
+                            }
+                    }
                 })
 
         });
