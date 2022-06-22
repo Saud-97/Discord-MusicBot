@@ -60,18 +60,8 @@ module.exports = async (client, oldState, newState) => {
       if (client.config.alwaysplay === false) {
         if (player.members === 1 && player.paused && player.prevMembers != player.members) {
           player.pause(false);
-          let playerResumed = new MessageEmbed()
-            .setColor(client.config.embedColor)
-            .setTitle(`Resumed!`, client.config.iconURL)
-            .setDescription(
-              `Playing  [${player.queue.current.title}](${player.queue.current.uri})`
-            )
-            .setFooter({ text: `The current song has been resumed.` });
-
-          let resumeMessage = await client.channels.cache
-            .get(player.textChannel)
-            .send({ embeds: [playerResumed] });
-          player.setResumeMessage(client, resumeMessage);
+          player.setPausedMessage(client, null);
+          player.sendNowplayingMessage(client);
 
           setTimeout(() => {
             if (!client.isMessageDeleted(resumeMessage)) {
