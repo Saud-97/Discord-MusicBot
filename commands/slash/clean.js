@@ -22,7 +22,7 @@ const command = new SlashCommand()
         if(isMusicChannel){
             player = client.manager.get(interaction.guild.id);
             if(player){
-                player.setSendMusicMessage(client, null);
+                player.setMusicMessage(client, true);
                 player.setNowplayingMessage(client, null);
             }
         }
@@ -51,15 +51,7 @@ const command = new SlashCommand()
                     }, 5000);
 
                     if(isMusicChannel && player){
-                        let sendMusicMessage =  await client.channels.cache
-                            .get(player.textChannel)
-                            .send({
-                                embeds: [
-                                    new MessageEmbed()
-                                        .setDescription("🎶 | Send a song name/link below this message to play music!"),
-                                ],
-                            });
-                        player.setSendMusicMessage(client, sendMusicMessage);
+                        player.setMusicMessage(client);
                         if(player.track)
                             player.sendNowplayingMessage(client);
                     }
