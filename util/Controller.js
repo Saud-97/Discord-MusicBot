@@ -66,6 +66,7 @@ module.exports = async (client, interaction) => {
 
   // if theres no previous song, return an error.
   if (property === "Replay") {
+    client.log("Player previous song was requested");
     if (!player.queue.previous) {
       const msg = await interaction.channel.send({
         embeds: [client.Embed("❌ | **There is no previous song to replay.**")],
@@ -109,6 +110,8 @@ module.exports = async (client, interaction) => {
   }
 
   if (property === "Next") {
+    client.log("Player next song was requested");
+
     player.stop();
     return interaction.deferUpdate();
   }

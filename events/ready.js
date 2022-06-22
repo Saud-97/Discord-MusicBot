@@ -18,7 +18,7 @@ module.exports = (client) => {
   }, 10000);
   client.log("Successfully logged in as " + client.user.tag);
 
-  setTimeout(autoJoinDefaultGuilds , 5000);
+  setTimeout(autoJoinDefaultGuilds , 3000);
 
   async function autoJoinDefaultGuilds() {
       for (const guild of client.config.guilds) {
@@ -33,7 +33,7 @@ module.exports = (client) => {
               client.createPlayer(0, 0, guild).connect(true).setMusicMessage(client);
 
           } catch (e) {
-              client.error(`Failed to auto join ${ guild.name } server. Verify guild configs.`);
+              client.error(`Failed to auto join guild ${ guild.name }. Verify guild configs.`);
           }
       }
   }
