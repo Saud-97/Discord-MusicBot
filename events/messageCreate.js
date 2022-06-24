@@ -15,7 +15,7 @@ module.exports = async (client, message) => {
     });
   }
 
-  let spCharsRegExp = /^[!@#$%^&*()_+\-=\[\]{};'`:"\\|,.<>\/?]+/;
+  let spCharsRegExp = /^[!@#$%^&*()_+\-\[\]{};'`:"\\|,.<>\/?]+/;
   if (!message.author.bot && client.config.guilds.some(guild => guild.textChannel == message.channel.id) && !spCharsRegExp.test(message.content)) {
 
     let channel = await client.getChannel(client, message);
@@ -52,6 +52,10 @@ module.exports = async (client, message) => {
     });
 
     let query = message.content;
+    let mixRequest = query.startsWith("== ")
+    if(mixRequest)
+      query = query.substring(2);
+
     let res = await player.search(query, message.member).catch((err) => {
       client.error(err);
       return {
@@ -59,7 +63,7 @@ module.exports = async (client, message) => {
       };
     });
 
-    if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
+    if (!mixRequest && (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT")) {
       player.queue.add(res.tracks[0]);
 
       if (!player.playing && !player.paused && !player.queue.size)
@@ -105,7 +109,14 @@ module.exports = async (client, message) => {
         .catch(this.warn);
     }
 
-    if (res.loadType === "PLAYLIST_LOADED") {
+    if (res.loadType === "PLAYLIST_LOADED" || mixRequest) {
+      if(mixRequest){
+        const identifier = res.tracks[0].identifier;
+        const requester = `<@${message.member.id}>`
+        query = `https://www.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
+        res = await player.search(query, requester);
+      }
+
       player.queue.add(res.tracks);
 
       if (
@@ -130,8 +141,7 @@ module.exports = async (client, message) => {
           false
         );
 
-      return message.channel
-        .send({ embeds: [playlistEmbed] })
+      return msg.edit({ embeds: [playlistEmbed] })
         .catch(this.warn);
     }
 
