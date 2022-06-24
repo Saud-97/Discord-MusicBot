@@ -57,13 +57,14 @@ module.exports = async (client, oldState, newState) => {
   switch (stateChange.type) {
     case "JOIN":
       if (client.config.alwaysplay === false) {
-        if (player.members === 1 && player.paused && player.prevMembers != player.members && !player.manuallyPaused) {
+        if (player.members === 1 && player.paused && player.prevMembers != player.members && !player.manuallyPaused && player.autoPaused) {
+          player.autoPaused = false;
           player.pause(false);
-          player.setPausedMessage(client, null);
           player.sendNowplayingMessage(client);
-
-        } else if (newState.channel.members.some( user => user.id == client.user.id) && newState.channel.members.size === 1){
-          client.log("player was paused because it was moved to an empty channel")
+        client.log("Player resumed due to being in a channel with someone else")
+        } else if (!player.manuallyPaused && newState.channel.members.size === 1 && newState.channel.members.some( user => user.id == client.user.id) ){
+          client.log("Player paused due to being in a channel alone");
+          player.autoPaused = true;
           player.pause(true);
           if(player.songsPlayed){
            await player.sendNowplayingMessage(client);
@@ -89,6 +90,7 @@ module.exports = async (client, oldState, newState) => {
           !player.paused &&
           player.playing
         ) {
+          player.autoPaused = true;
           player.pause(true);
           player.sendNowplayingMessage(client);
           let playerPaused = new MessageEmbed()
