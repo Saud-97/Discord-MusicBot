@@ -40,13 +40,13 @@ module.exports = {
   // The default one should work fine.
   nodes: [
     {
-      identifier: "Main Node", //- Used for indentifier in stats commands.
-      host: "lavalink.darrenofficial.com",
-      port: 80,
-      password: "hellothere",
-      retryAmount: 999999999999, //- The amount of times to retry connecting to the node if connection got dropped.
+      identifier: "Main Node", //- Used for identifier in stats commands.
+      host: "lavalink.oops.wtf",
+      port: 443,
+      password: "www.freelavalink.ga",
+      retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
       retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
-      secure: false, //- Can be either true or false. Only use true if ssl is enabled!
+      secure: true, //- Can be either true or false. Only use true if ssl is enabled!
     },
   ],
   embedColor: "#000000", //Color of the embeds, hex supported
