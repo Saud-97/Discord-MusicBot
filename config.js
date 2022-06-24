@@ -40,19 +40,19 @@ module.exports = {
   // The default one should work fine.
   nodes: [
     {
-      identifier: "Main Node", //- Used for identifier in stats commands.
-      host: "lavalink.kapes.eu",
-      port: 2222,
-      password: "lavalinkplay",
+      identifier: "alexanderof", //- Used for identifier in stats commands.
+      host: "audio.alexanderof.xyz",
+      port: 2000,
+      password: "lavalink",
       retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
       retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
       secure: false, //- Can be either true or false. Only use true if ssl is enabled!
     },
     {
-      identifier: "Backup Node", //- Used for identifier in stats commands.
-      host: "audio.alexanderof.xyz",
-      port: 2000,
-      password: "lavalink",
+      identifier: "kapes", //- Used for identifier in stats commands.
+      host: "lavalink.kapes.eu",
+      port: 2222,
+      password: "lavalinkplay",
       retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
       retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
       secure: false, //- Can be either true or false. Only use true if ssl is enabled!
