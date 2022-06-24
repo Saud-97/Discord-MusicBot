@@ -54,36 +54,43 @@ module.exports = async (client, oldState, newState) => {
   player.prevMembers = player.members
   stateChange.members = stateChange.channel.members.filter(member => !member.user.bot);
   player.members = stateChange.members.size
-  client.log("player.members =" + player.members);
-  client.log("stateChange.type =" + stateChange.type);
   switch (stateChange.type) {
     case "JOIN":
       if (client.config.alwaysplay === false) {
-        if (player.members === 1 && player.paused && player.prevMembers != player.members) {
+        if (player.members === 1 && player.paused && player.prevMembers != player.members && !player.manuallyPaused) {
           player.pause(false);
           player.setPausedMessage(client, null);
           player.sendNowplayingMessage(client);
 
-          setTimeout(() => {
-            if (!client.isMessageDeleted(resumeMessage)) {
-              resumeMessage.delete();
-              client.markMessageAsDeleted(resumeMessage);
-            }
-          }, 5000);
-        } else if (player.members === 0 && player.playing){
+        } else if (newState.channel.members.some( user => user.id == client.user.id) && newState.channel.members.size === 1){
+          client.log("player was paused because it was moved to an empty channel")
           player.pause(true);
+          if(player.songsPlayed){
+           await player.sendNowplayingMessage(client);
+            let playerPaused = new MessageEmbed()
+                .setColor(client.config.embedColor)
+                .setTitle(`Paused!`, client.config.iconURL)
+                .setFooter({
+                  text: `The current song has been paused because theres no one in the voice channel.`,
+                });
+
+            let pausedMessage = await client.channels.cache
+                .get(player.textChannel)
+                .send({ embeds: [playerPaused] });
+            player.setPausedMessage(client, pausedMessage);
+          }
         }
       }
       break;
     case "LEAVE":
       if (client.config.alwaysplay === false) {
         if (
-          stateChange.members.size === 0 &&
+            (stateChange.members.size === 0) &&
           !player.paused &&
           player.playing
         ) {
           player.pause(true);
-
+          player.sendNowplayingMessage(client);
           let playerPaused = new MessageEmbed()
             .setColor(client.config.embedColor)
             .setTitle(`Paused!`, client.config.iconURL)
