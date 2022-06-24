@@ -54,7 +54,8 @@ module.exports = async (client, oldState, newState) => {
   player.prevMembers = player.members
   stateChange.members = stateChange.channel.members.filter(member => !member.user.bot);
   player.members = stateChange.members.size
-
+  client.log("player.members =" + player.members);
+  client.log("stateChange.type =" + stateChange.type);
   switch (stateChange.type) {
     case "JOIN":
       if (client.config.alwaysplay === false) {
@@ -69,6 +70,8 @@ module.exports = async (client, oldState, newState) => {
               client.markMessageAsDeleted(resumeMessage);
             }
           }, 5000);
+        } else if (player.members === 0 && player.playing){
+          player.pause(true);
         }
       }
       break;
