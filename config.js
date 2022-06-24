@@ -41,18 +41,27 @@ module.exports = {
   nodes: [
     {
       identifier: "Main Node", //- Used for identifier in stats commands.
-      host: "lavalink.oops.wtf",
-      port: 443,
-      password: "www.freelavalink.ga",
+      host: "lavalink.kapes.eu",
+      port: 2222,
+      password: "lavalinkplay",
       retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
       retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
-      secure: true, //- Can be either true or false. Only use true if ssl is enabled!
+      secure: false, //- Can be either true or false. Only use true if ssl is enabled!
+    },
+    {
+      identifier: "Backup Node", //- Used for identifier in stats commands.
+      host: "audio.alexanderof.xyz",
+      port: 2000,
+      password: "lavalink",
+      retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
+      retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
+      secure: false, //- Can be either true or false. Only use true if ssl is enabled!
     },
   ],
   embedColor: "#000000", //Color of the embeds, hex supported
   presence: {
     //PresenceData object | https://discord.js.org/#/docs/main/stable/typedef/PresenceData
-    status: "online", // You can have online, idle, and dnd(invisible too but it make people think the bot is offline)
+    status: "online", // You can have online, idle, and dnd(invisible too, but it makes people think the bot is offline)
     activities: [
       {
         name: "22 On Top", //Status Text
