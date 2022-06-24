@@ -9,16 +9,16 @@ module.exports = {
       textChannel: "987259543446777916", // text channel ID to listen for song names and autoplay them
     },
     {
-      name: "Finland",
-      id: "957328899279294484",
-      voiceChannel: "988483302866423858", // voice channel ID to auto join on bot restart
-      textChannel: "988483319157100554", // text channel ID to listen for song names and autoplay them
-    },
-    {
       name: "Saud's Server",
       id: "689135944078852154",
       voiceChannel: "878731071481602049", // voice channel ID to auto join on bot restart
       textChannel: "985988530125815859", // text channel ID to listen for song names and autoplay them
+    },
+    {
+      name: "Narcos's Server",
+      id: "754644311114514444",
+      voiceChannel: "771532867019735091", // voice channel ID to auto join on bot restart
+      textChannel: "989715634315231332", // text channel ID to listen for song names and autoplay them
     },
   ],
   token: process.env.Token || "", //Bot's Token
