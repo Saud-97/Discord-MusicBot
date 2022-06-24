@@ -41,7 +41,7 @@ const command = new SlashCommand()
         ephemeral: true,
       });
     }
-
+    player.manuallyPaused = true;
     player.pause(true);
     return interaction.reply({
       embeds: [

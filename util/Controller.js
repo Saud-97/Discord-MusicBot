@@ -97,8 +97,13 @@ module.exports = async (client, interaction) => {
 
     } else {
 
-      if (player.paused) player.pause(false);
-      else player.pause(true);
+      if (player.paused) {
+        player.pause(false);
+        player.manuallyPaused = false;
+      } else {
+        player.manuallyPaused = true
+        player.pause(true);
+      }
       client.warn(`Player: ${player.options.guild} | Successfully ${player.paused? "paused":"resumed"} the player`);
 
       interaction.update({
