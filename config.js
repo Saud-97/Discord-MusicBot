@@ -41,11 +41,11 @@ module.exports = {
   nodes: [
     {
       identifier: "Main Node", //- Used for indentifier in stats commands.
-      host: "audio.alexanderof.xyz",
-      port: 2000,
-      password: "lavalink",
-      retryAmount: 999999999999999, //- The amount of times to retry connecting to the node if connection got dropped.
-      retryDelay: 10, //- Delay between reconnect attempts if connection is lost.
+      host: "lavalink.darrenofficial.com",
+      port: 80,
+      password: "hellothere",
+      retryAmount: 999999999999, //- The amount of times to retry connecting to the node if connection got dropped.
+      retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
       secure: false, //- Can be either true or false. Only use true if ssl is enabled!
     },
   ],
