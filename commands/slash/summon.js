@@ -20,6 +20,11 @@ const command = new SlashCommand().setName("summon").setDescription("Summons the
 		if (channel.id !== player.voiceChannel) {
 			player.setVoiceChannel(channel.id);
 			player.connect();
+		} else {
+			const channelID = player.voiceChannel;
+			player.disconnect();
+			player.setVoiceChannel(channelID);
+			player.connect();
 		}
 		
 		interaction.reply({
