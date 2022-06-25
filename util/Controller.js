@@ -38,7 +38,7 @@ module.exports = async (client, interaction) => {
         .setDescription(
             "❌ | **You must be in the same voice channel as me to use this action!**"
         );
-    return await interaction.reply({ embeds: [sameEmbed], ephemeral: true });
+    return interaction.reply({ embeds: [sameEmbed], ephemeral: true });
   }
 
   if (property === "Stop") {
@@ -57,14 +57,12 @@ module.exports = async (client, interaction) => {
       msg.delete();
     }, 5000);
       
-    interaction.update({
+    return interaction.update({
       components: [client.createController(player.options.guild, player)],
     });
-
-    return;
   }
 
-  // if theres no previous song, return an error.
+  // if there's no previous song, return an error.
   if (property === "Replay") {
     client.log("Player previous song was requested");
     if (!player.queue.previous) {
@@ -74,12 +72,12 @@ module.exports = async (client, interaction) => {
       setTimeout(() => {
         msg.delete();
       }, 5000);
-      return;
+    } else {
+      const currentSong = player.queue.current;
+      player.play(player.queue.previous);
+      if (currentSong) player.queue.unshift(currentSong);
     }
-    const currentSong = player.queue.current;
-    player.play(player.queue.previous);
-    if (currentSong) player.queue.unshift(currentSong);
-    return;
+    return interaction.deferUpdate();
   }
 
   if (property === "PlayAndPause") {
@@ -94,10 +92,9 @@ module.exports = async (client, interaction) => {
       setTimeout(() => {
         msg.delete();
       }, 5000);
-
-    } else {
-
-      if (player.paused) {
+      return interaction.deferUpdate();
+    }
+    if (player.paused) {
         player.pause(false);
         player.manuallyPaused = false;
       } else {
@@ -106,13 +103,11 @@ module.exports = async (client, interaction) => {
       }
       client.warn(`Player: ${player.options.guild} | Successfully ${player.paused? "paused":"resumed"} the player`);
 
-      interaction.update({
+      return interaction.update({
         components: [client.createController(player.options.guild, player)],
       });
     }
 
-    return;
-  }
 
   if (property === "Next") {
     client.log("Player next song was requested");
@@ -132,10 +127,9 @@ module.exports = async (client, interaction) => {
     }
     client.warn(`Player: ${player.options.guild} | Successfully toggled loop the player`);
 
-    interaction.update({
+    return interaction.update({
       components: [client.createController(player.options.guild, player)],
     });
-    return;
   }
 
   return interaction.reply({
