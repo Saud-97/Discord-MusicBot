@@ -74,7 +74,7 @@ module.exports = async (client, oldState, newState) => {
 	player.members = stateChange.members.size
 	switch (stateChange.type) {
 		case "JOIN":
-			if (client.config.alwaysplay === false) {
+			if (client.config.alwaysPlay === false) {
 				if (player.members === 1 && player.paused && player.prevMembers != player.members && !player.manuallyPaused && player.autoPaused) {
 					player.autoPaused = false;
 					player.pause(false);
@@ -98,7 +98,7 @@ module.exports = async (client, oldState, newState) => {
 			}
 			break;
 		case "LEAVE":
-			if (client.config.alwaysplay === false) {
+			if (client.config.alwaysPlay === false) {
 				if (
 					(stateChange.members.size === 0) &&
 					!player.paused &&

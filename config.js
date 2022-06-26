@@ -32,15 +32,15 @@ module.exports = {
 	Issues: "https://github.com/SudhanPlayz/Discord-MusicBot/issues", //Bug Report Link
 	permissions: 277083450689, //Bot Inviting Permissions
 	disconnectTime: 30000, //How long should the bot wait before disconnecting from the voice channel. in miliseconds. set to 1 for instant disconnect.
-	alwaysplay: false, // when set to true music will always play no matter if theres no one in voice channel.
+	alwaysPlay: false, // when set to true music will always play no matter if there's no one in voice channel.
 	debug: true, //Debug mode
-	cookieSecret: "CodingWithSudhan is epic",//Cookie Secret
-	website: "http://localhost:" + this.port,//without the / at the end
+	cookieSecret: "CodingWithSudhan is epic", //Cookie Secret
+	website: "http://localhost:" + this.port, //without the / at the end
 	// Lavalink server; optional public lavalink -> https://lavalink-list.darrennathanael.com/
 	// The default one should work fine.
 	nodes: [
 		{
-			identifier: "alexanderof", //- Used for identifier in stats commands.
+			identifier: this.host, //- Used for identifier in stats commands.
 			host: "audio.alexanderof.xyz",
 			port: 2000,
 			password: "lavalink",
@@ -49,7 +49,7 @@ module.exports = {
 			secure: false, //- Can be either true or false. Only use true if ssl is enabled!
 		},
 		{
-			identifier: "kapes", //- Used for identifier in stats commands.
+			identifier: this.host, //- Used for identifier in stats commands.
 			host: "lavalink.kapes.eu",
 			port: 2222,
 			password: "lavalinkplay",
