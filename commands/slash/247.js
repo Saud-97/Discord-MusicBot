@@ -4,8 +4,10 @@ const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand().setName("247")
 	.setDescription("Prevents the bot from ever disconnecting from a VC (toggle)")
+	.addBooleanOption((option) =>
+		option.setName("enabled").setDescription("Enable or disable the 24/7 mode"))
 	.setRun(async (client, interaction, options) => {
-		let channel = await client.getChannel(client, interaction);
+		const channel = await client.getChannel(client, interaction);
 		if (!channel) {
 			return;
 		}
@@ -30,41 +32,29 @@ const command = new SlashCommand().setName("247")
 			});
 		}
 		
-		let twentyFourSevenEmbed = new MessageEmbed().setColor(
-			client.config.embedColor,
-		);
-		const twentyFourSeven = player.get("twentyFourSeven");
-		
-		if (!twentyFourSeven || twentyFourSeven === false) {
-			player.set("twentyFourSeven", true);
-		} else {
-			player.set("twentyFourSeven", false);
+		let twentyFourSeven = player.get("twentyFourSeven");
+		let enabled = interaction.options.getBoolean("Enable")
+		if (enabled !== null && enabled != twentyFourSeven) {
+			player.set("twentyFourSeven", enabled);
+			twentyFourSeven = enabled;
+			client.warn(
+				`Player: ${ player.options.guild } | [${ colors.blue(
+					"24/7",
+				) }] was [${ colors.blue(
+					twentyFourSeven? "ENABLED" : "DISABLED",
+				) }] in ${
+					client.guilds.cache.get(player.options.guild)
+						? client.guilds.cache.get(player.options.guild).name
+						: "a guild"
+				}`,
+			);
 		}
 		
-		twentyFourSevenEmbed.setDescription(
-			`✅ | **24/7 mode is \`${ !twentyFourSeven? "ON" : "OFF" }\`**`,
-		);
-		client.warn(
-			`Player: ${ player.options.guild } | [${ colors.blue(
-				"24/7",
-			) }] has been [${ colors.blue(
-				!twentyFourSeven? "ENABLED" : "DISABLED",
-			) }] in ${
-				client.guilds.cache.get(player.options.guild)
-					? client.guilds.cache.get(player.options.guild).name
-					: "a guild"
-			}`,
-		);
-		
-		
-		return interaction.reply({ embeds: [twentyFourSevenEmbed] });
+		return interaction.reply({
+			embeds: [client.Embed(
+				`✅ | **24/7 mode is \`${ twentyFourSeven? "ON" : "OFF" }\`**`,
+			)],
+		});
 	});
 
 module.exports = command;
-// check above message, it is a little bit confusing. and erros are not handled. probably should be fixed.
-// ok use catch ez kom  follow meh ;_;
-// the above message meaning error, if it cant find it or take too long the bot crashed
-// play commanddddd, if timeout or takes 1000 years to find song it crashed
-// OKIE, leave the comment here for idk
-// Comment very useful, 247 good :+1:
-// twentyFourSeven = best;

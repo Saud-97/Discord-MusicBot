@@ -6,7 +6,7 @@ const command = new SlashCommand().setName("play").setDescription(
 ).addStringOption((option) =>
 	option.setName("query").setDescription("What am I looking for?").setRequired(true),
 ).setRun(async (client, interaction, options) => {
-	let channel = await client.getChannel(client, interaction);
+	const channel = await client.getChannel(client, interaction);
 	if (!channel) {
 		return;
 	}
