@@ -41,12 +41,12 @@ module.exports = {
 	nodes: [
 		{
 			identifier: this.host, //- Used for identifier in stats commands.
-			host: "connect.freelavalink.ga",
-			port: 443,
-			password: "www.freelavalink.ga",
+			host: "audio.alexanderof.xyz",
+			port: 2000,
+			password: "lavalink",
 			retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
 			retryDelay: 40, //- Delay between reconnect attempts if connection is lost.
-			secure: true,
+			secure: false, //- Can be either true or false. Only use true if ssl is enabled!
 		},
 	],
 	embedColor: "#000000", //Color of the embeds, hex supported
