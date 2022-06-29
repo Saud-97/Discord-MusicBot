@@ -3,6 +3,7 @@ module.exports = () => {
 		try {
 			const config = require("../dev-config");
 			res(config);
+			console.log("Running using dev-config.js")
 		} catch {
 			try {
 				const config = require("../config");
