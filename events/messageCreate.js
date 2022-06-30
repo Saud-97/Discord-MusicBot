@@ -50,9 +50,12 @@ module.exports = async (client, message) => {
 		});
 		
 		let query = message.content;
-		let mixRequest = query.startsWith("== ")
+		let mixRequest = query.startsWith("==")
 		if (mixRequest) {
-			query = query.substring(2);
+			let url = query.indexOf("://");
+			let lastIndex = query.indexOf("&list");
+			lastIndex = url > 0 && lastIndex > 0? lastIndex : undefined;
+			query = query.substring(2, lastIndex);
 		}
 		
 		let res = await player.search(query, message.member).catch((err) => {
@@ -137,9 +140,13 @@ module.exports = async (client, message) => {
 			
 			return msg.edit({ embeds: [playlistEmbed] }).catch(this.warn);
 		}
+		
 		msg.edit({ embeds: [client.ErrorEmbed("The query provided was invalid")] }).catch(this.warn);
 		setTimeout(() => {
 			msg.delete();
 		}, 5000);
+		client.log(`query = "${ query }"`)
+		client.log(`res.loadType = "${ res.loadType }"`)
+		
 	}
 };
