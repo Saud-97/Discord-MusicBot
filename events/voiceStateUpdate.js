@@ -37,14 +37,22 @@ module.exports = async (client, oldState, newState) => {
 		oldState.serverMute == false &&
 		newState.id === client.config.clientId
 	) {
-		return player.pause(true);
+		if (!player.paused) {
+			player.pause(true);
+			player.sendNowplayingMessage(client);
+		}
+		return;
 	}
 	if (
 		newState.serverMute == false &&
 		oldState.serverMute == true &&
 		newState.id === client.config.clientId
 	) {
-		return player.pause(false);
+		if (player.paused && player.queue.current) {
+			player.pause(false);
+			player.sendNowplayingMessage(client);
+		}
+		return;
 	}
 	// move check first as it changes type
 	if (stateChange.type === "MOVE") {

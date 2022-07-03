@@ -19,7 +19,7 @@ module.exports = (client) => {
 	}, 10000);
 	client.log("Successfully logged in as " + client.user.tag);
 	
-	setTimeout(autoJoinDefaultGuilds, 3000);
+	setTimeout(autoJoinDefaultGuilds, 1000);
 	
 	async function autoJoinDefaultGuilds() {
 		for (const guild of client.config.guilds) {

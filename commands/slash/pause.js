@@ -38,6 +38,7 @@ const command = new SlashCommand().setName("pause").setDescription("Pauses the c
 		}
 		player.manuallyPaused = true;
 		player.pause(true);
+		interaction.guild.me.voice.setMute(true);
 		return interaction.reply({
 			embeds: [
 				new MessageEmbed().setColor(client.config.embedColor).setDescription(`⏸ | **Paused!**`),

@@ -38,6 +38,7 @@ const command = new SlashCommand().setName("resume").setDescription("Resume curr
 		}
 		player.manuallyPaused = false
 		player.pause(false);
+		interaction.guild.me.voice.setMute(false);
 		return interaction.reply({
 			embeds: [
 				new MessageEmbed().setColor(client.config.embedColor).setDescription(`⏯ **Resumed!**`),
