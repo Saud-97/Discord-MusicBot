@@ -19,12 +19,12 @@ export default function Server(props: IProps) {
         <Link href={ "/servers/" + props.id }><a>
             <Tooltip content={ props.name } color="secondary">
                 <Avatar
-                    src={ props.icon }
-                    size="xl"
-                    //@ts-ignore
-                    color={ getColor() }
-                    bordered
-                    pointer
+                        src={ props.icon }
+                        size="xl"
+                        //@ts-ignore
+                        color={ getColor() }
+                        bordered
+                        pointer
                 />
             </Tooltip>
         </a></Link>

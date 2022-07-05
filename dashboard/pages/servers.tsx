@@ -1,4 +1,3 @@
-import {Grid} from "@nextui-org/react";
 import Head from "next/head";
 import Content from "../components/content";
 import Server from "../components/server";
@@ -13,14 +12,14 @@ export default function Servers(_props: any) {
             display: 'flex',
         } }>
             <Server
-                icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
-                name="Coding with amogus" id=";-;"/>
+                    icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
+                    name="Coding with amogus" id=";-;"/>
             <Server
-                icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
-                name="Coding with amogus" id=";-;"/>
+                    icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
+                    name="Coding with amogus" id=";-;"/>
             <Server
-                icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
-                name="Coding with amogus" id=";-;"/>
+                    icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
+                    name="Coding with amogus" id=";-;"/>
         </div>
     </Content>
 }

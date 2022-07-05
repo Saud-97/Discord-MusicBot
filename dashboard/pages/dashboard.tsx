@@ -1,10 +1,5 @@
 import Head from "next/head";
-import {
-    RocketLaunchRounded,
-    PersonRounded,
-    DnsRounded,
-    AudiotrackRounded
-} from "@mui/icons-material"
+import {AudiotrackRounded, DnsRounded, PersonRounded, RocketLaunchRounded} from "@mui/icons-material"
 import Content from "../components/content";
 import StatCard from "../components/StatCard";
 import {useEffect, useState} from "react";

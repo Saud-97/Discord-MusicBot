@@ -22,7 +22,7 @@ const command = new SlashCommand().setName("summon").setDescription("Summons the
 			player.connect();
 		} else {
 			//summon was used on the same channel as the current player channel, recreate player.
-				client.verifyLavalinkCorruption(player, interaction.channel, channel);
+			client.verifyLavalinkCorruption(player, interaction.channel, channel);
 		}
 		
 		interaction.reply({

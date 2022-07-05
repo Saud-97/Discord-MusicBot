@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = async (client, message) => {
-	const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
+	const mention = new RegExp(`^<@!?${ client.user.id }>( |)$`);
 	
 	if (message.content.match(mention)) {
 		const mentionEmbed = new MessageEmbed().setColor(client.config.embedColor).setDescription(
