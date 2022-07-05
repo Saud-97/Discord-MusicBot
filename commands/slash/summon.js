@@ -21,10 +21,27 @@ const command = new SlashCommand().setName("summon").setDescription("Summons the
 			player.setVoiceChannel(channel.id);
 			player.connect();
 		} else {
-			const channelID = player.voiceChannel;
-			player.disconnect();
-			player.setVoiceChannel(channelID);
-			player.connect();
+			//summon was used on the same channel as the current player channel, recreate player.
+			const oldPlayer = player;
+			player.setNowplayingMessage(client, null);
+			player.destroy();
+			setTimeout(() => {
+				player = client.createPlayer(interaction.channel, channel);
+				player.connect();
+				player.queue = oldPlayer.queue;
+				player.options = oldPlayer.options;
+				player.set("autoQueue", oldPlayer.get("autoQueue"));
+				player.setQueueRepeat(player.queueRepeat);
+				player.setTrackRepeat(player.trackRepeat);
+				
+				if (player.queue.previous) {
+					const currentSong = player.queue.current;
+					player.play(player.queue.previous);
+					if (currentSong) {
+						player.queue.unshift(currentSong);
+					}
+				}
+			}, 500);
 		}
 		
 		interaction.reply({
