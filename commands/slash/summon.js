@@ -23,7 +23,6 @@ const command = new SlashCommand().setName("summon").setDescription("Summons the
 		} else {
 			//summon was used on the same channel as the current player channel, recreate player.
 			const oldPlayer = player;
-			player.setNowplayingMessage(client, null);
 			player.destroy();
 			setTimeout(() => {
 				player = client.createPlayer(interaction.channel, channel);
@@ -33,13 +32,14 @@ const command = new SlashCommand().setName("summon").setDescription("Summons the
 				player.set("autoQueue", oldPlayer.get("autoQueue"));
 				player.setQueueRepeat(player.queueRepeat);
 				player.setTrackRepeat(player.trackRepeat);
+				player.nowPlayingMessage = oldPlayer.nowPlayingMessage;
+				player.pausedMessage = oldPlayer.pausedMessage;
+				player.resumeMessage = oldPlayer.resumeMessage;
+				player.queueEndedMessage = oldPlayer.queueEndedMessage;
+				player.sendMusicMessage = oldPlayer.sendMusicMessage;
 				
-				if (player.queue.previous) {
-					const currentSong = player.queue.current;
-					player.play(player.queue.previous);
-					if (currentSong) {
-						player.queue.unshift(currentSong);
-					}
+				if (player.queue.current) {
+					player.play(player.queue.current);
 				}
 			}, 500);
 		}
