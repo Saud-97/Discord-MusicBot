@@ -37,7 +37,7 @@ module.exports = async (client, oldState, newState) => {
 		oldState.serverMute == false &&
 		newState.id === client.config.clientId
 	) {
-		if (!player.paused) {
+		if (!player.paused && player.queue.current) {
 			player.pause(true);
 			player.sendNowplayingMessage(client);
 		}
@@ -51,6 +51,7 @@ module.exports = async (client, oldState, newState) => {
 		if (player.paused && player.queue.current) {
 			player.pause(false);
 			player.sendNowplayingMessage(client);
+			client.verifyLavalinkCorruption(player);
 		}
 		return;
 	}
