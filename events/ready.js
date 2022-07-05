@@ -31,7 +31,7 @@ module.exports = (client) => {
 						client.Embed(":white_check_mark: | **The bot have been restarted.**"),
 					],
 				});
-				client.createPlayer(0, 0, guild).connect(true).setMusicMessage(client);
+				client.createPlayer(0, 0, guild).connect().setMusicMessage(client);
 				
 			} catch (e) {
 				client.error(`Failed to auto join guild ${ guild.name }. Verify guild configs.`);

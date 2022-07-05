@@ -83,24 +83,17 @@ module.exports = async (client, oldState, newState) => {
 	switch (stateChange.type) {
 		case "JOIN":
 			if (client.config.alwaysPlay === false) {
-				if (player.members === 1 && player.paused && player.prevMembers != player.members && !player.manuallyPaused && player.autoPaused) {
+				if (player.members && player.paused && player.prevMembers != player.members && !player.manuallyPaused && player.autoPaused) {
 					player.autoPaused = false;
 					player.pause(false);
 					player.sendNowplayingMessage(client);
 					client.log("Player resumed due to being in a channel with someone else")
-				} else if (!player.manuallyPaused && newState.channel.members.size === 1 && newState.channel.members.some(user => user.id == client.user.id)) {
-					client.log("Player paused due to being in a channel alone");
+				} else if (player.prevMembers && !player.manuallyPaused && newState.channel.members.size === 1 && newState.channel.members.some(user => user.id == client.user.id)) {
+					client.log("Player paused due to moving to a channel alone");
 					player.autoPaused = true;
 					player.pause(true);
 					if (player.songsPlayed) {
 						await player.sendNowplayingMessage(client);
-						let playerPaused = new MessageEmbed().setColor(client.config.embedColor)
-							.setTitle(`Paused!`, client.config.iconURL).setFooter({
-								text: `The current song has been paused because theres no one in the voice channel.`,
-							});
-						
-						let pausedMessage = await client.channels.cache.get(player.textChannel).send({ embeds: [playerPaused] });
-						player.setPausedMessage(client, pausedMessage);
 					}
 				}
 			}

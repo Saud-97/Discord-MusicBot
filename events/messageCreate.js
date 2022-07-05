@@ -18,7 +18,6 @@ module.exports = async (client, message) => {
 	if (!message.author.bot && client.config.guilds.some(guild => guild.textChannel == message.channel.id) && !spCharsRegExp.test(message.content)) {
 		
 		let channel = await client.getChannel(client, message);
-		message.delete()
 		if (!channel) {
 			return;
 		}
@@ -75,6 +74,7 @@ module.exports = async (client, message) => {
 				};
 			});
 		}
+		message.delete()
 		
 		if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
 			player.queue.add(res.tracks[0]);
