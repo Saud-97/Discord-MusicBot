@@ -19,10 +19,10 @@ module.exports = (client) => {
 	}, 10000);
 	client.log("Successfully logged in as " + client.user.tag);
 	
-	setTimeout(autoJoinDefaultGuilds, 1000);
+autoJoinDefaultGuilds();
 	
 	async function autoJoinDefaultGuilds() {
-		for (const guild of client.config.guilds) {
+		client.config.guilds.map(async guild => {
 			try {
 				const channel = await client.channels.cache.get(guild.textChannel);
 				await clearChannel(channel);
@@ -31,12 +31,23 @@ module.exports = (client) => {
 						client.Embed(":white_check_mark: | **The bot have been restarted.**"),
 					],
 				});
-				client.createPlayer(0, 0, guild).connect().setMusicMessage(client);
+				
+				while (true) {
+					try {
+						client.createPlayer(0, 0, guild).connect().setMusicMessage(client);
+						break;
+					} catch (e) {
+						if (e != "RangeError: No available nodes.") {
+							throw e;
+						}
+					}
+				}
 				
 			} catch (e) {
 				client.error(`Failed to auto join guild ${ guild.name }. Verify guild configs.`);
+				client.error(e)
 			}
-		}
+		});
 	}
 	
 	async function clearChannel(channel, n = 0, old = false) {
