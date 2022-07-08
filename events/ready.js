@@ -32,16 +32,19 @@ autoJoinDefaultGuilds();
 					],
 				});
 				
-				while (true) {
+				let interval = setInterval(() => {
 					try {
 						client.createPlayer(0, 0, guild).connect().setMusicMessage(client);
-						break;
+						clearInterval(interval);
 					} catch (e) {
-						if (e != "RangeError: No available nodes.") {
+						if (e == "RangeError: No available nodes.") {
+							console.log(`waiting for lavalink node`)
+						} else {
 							throw e;
 						}
 					}
-				}
+				}, 1000)
+				
 				
 			} catch (e) {
 				client.error(`Failed to auto join guild ${ guild.name }. Verify guild configs.`);

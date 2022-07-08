@@ -66,13 +66,17 @@ module.exports = async (client, message) => {
 		
 		if (mixRequest && (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT")) {
 			const identifier = res.tracks[0].identifier;
-			query = `https://www.youtube.com/watch?v=${ identifier }&list=RD${ identifier }`;
-			res = await player.search(query, message.member).catch((err) => {
+			const mixQuery = `https://www.youtube.com/watch?v=${ identifier }&list=RD${ identifier }`;
+			const mixRes = await player.search(mixQuery, message.member).catch((err) => {
 				client.error(err);
 				return {
 					loadType: "LOAD_FAILED",
 				};
 			});
+			if (mixRes.loadType != "LOAD_FAILED") {
+				query = mixQuery;
+				res = mixRes;
+			}
 		}
 		message.delete()
 		
@@ -141,10 +145,10 @@ module.exports = async (client, message) => {
 			return msg.edit({ embeds: [playlistEmbed] }).catch(this.warn);
 		}
 		
-		msg.edit({ embeds: [client.ErrorEmbed("The query provided was invalid")] }).catch(this.warn);
+		msg.edit({ embeds: [client.ErrorEmbed(`The query provided was invalid.\n\n> ${ query }`)] }).catch(this.warn);
 		setTimeout(() => {
 			msg.delete();
-		}, 5000);
+		}, 15000);
 		client.log(`query = "${ query }"`)
 		client.log(`res.loadType = "${ res.loadType }"`)
 		
