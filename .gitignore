@@ -106,6 +106,5 @@ dist
 
 # Etc
 dev-config.js
-db.json
 package-lock.json
-.idea/*
+.idea/

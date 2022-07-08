@@ -24,12 +24,11 @@ class Server extends EventEmitter {
 	 */
 	constructor(client) {
 		super();
-		getConfig().then((conf) => {
-			this.config = conf;
-			this.listen();
-		}).catch((err) => {
-			throw Error(err);
-		});
+		getConfig()
+			.then((conf) => {
+				this.config = conf;
+				this.listen();
+			});
 		
 		this.app = express();
 		
