@@ -42,16 +42,6 @@ module.exports = async (client, interaction) => {
 		player.stop();
 		player.set("autoQueue", false);
 		client.warn(`Player: ${ player.options.guild } | Successfully stopped the player`);
-		const msg = await interaction.channel.send({
-			embeds: [
-				client.Embed(
-					"⏹️ | **Successfully stopped the player**",
-				),
-			],
-		});
-		setTimeout(() => {
-			msg.delete();
-		}, 5000);
 		
 		return interaction.update({
 			components: [client.createController(player.options.guild, player)],
