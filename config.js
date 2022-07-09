@@ -41,6 +41,15 @@ module.exports = {
 	nodes: [
 		{
 			identifier: this.host, //- Used for identifier in stats commands.
+			host: "audio.alexanderof.xyz",
+			port: 2000,
+			password: "lavalink",
+			retryAmount: 9999, //- The amount of times to retry connecting to the node if connection got dropped.
+			retryDelay: 400, //- Delay between reconnect attempts if connection is lost.
+			secure: false, //- Can be either true or false. Only use true if ssl is enabled!
+		},
+		{
+			identifier: this.host, //- Used for identifier in stats commands.
 			host: "lavalink.saud-97.repl.co",
 			port: 443,
 			password: "maybeiwasboring",
